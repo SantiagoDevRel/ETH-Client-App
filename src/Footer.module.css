@@ -1,0 +1,31 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.footer {
+  font-size: 12px;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  width: 30vw;
+  bottom: 0px;
+  left: 35vw;
+  height: 7vh;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.svg {
+  width: 3vw;
+  height: 3vh;
+}
+
+.footer:hover {
+  color: rgb(150, 150, 150);
+}
