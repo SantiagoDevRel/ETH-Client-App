@@ -32,7 +32,8 @@ const alchemy = new Alchemy(settings);
 
 export async function fetchFeeHistory() {
   const _currentBlock = await alchemy.core.getBlockNumber();
-  const _currentBlockHex = ethers.utils.hexlify(_currentBlock);
+  const _hexNumber = ethers.utils.hexlify(_currentBlock);
+  const _currentBlockHex = ethers.utils.hexStripZeros(_hexNumber);
   return {
     currentBlock: _currentBlock,
     arrayFeeHistory: await alchemy.core.send("eth_feeHistory", [
