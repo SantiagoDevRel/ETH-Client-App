@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./BaseFee.module.css";
-import { Network, Alchemy } from "alchemy-sdk";
-import { ethers } from "ethers";
 import { fetchFeeHistory } from "./BaseFee";
 import {
   Chart as ChartJS,
