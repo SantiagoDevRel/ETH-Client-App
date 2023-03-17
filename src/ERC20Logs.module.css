@@ -1,12 +1,15 @@
-.containerButtons {
+.container_title {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  column-gap: 5vw;
+  align-items: center;
+  column-gap: 2vw;
+  margin-bottom: 2vh;
 }
 
-.img {
-  width: 2vw;
-  height: 2vh;
+.container {
+  display: flex;
+  justify-content: center;
 }
 
 .title {
@@ -16,47 +19,9 @@
   display: inline-block;
 }
 
-.logs {
-  color: white;
-  font-size: 15px;
-}
-
-.a {
-  margin-bottom: 15px;
-  color: #a5a5a5;
-  text-decoration: none;
-}
-
-.a:hover {
-  color: rgb(177, 177, 177);
-}
-
-.containerTxs {
-  display: flex;
-  flex-direction: row;
-  margin-left: 5vw;
-  margin-right: 5vw;
-  justify-content: space-between;
-}
-
-.everyLog {
-  border-radius: 5px;
-  box-shadow: rgba(255, 255, 255, 0.4) 0 2px 4px,
-    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.2) 0 -3px 0 inset;
-  margin-bottom: 2vh;
-  padding: 15px 15px 15px 15px;
-  width: 100%;
-}
-
-.zero {
-  color: rgb(189, 189, 189);
-  text-shadow: 1px 1px 2px #f6f3f3, 0 0 1em #0000001e,
-    0 0 0.2ergba (129, 71, 229, 0) e5;
-  justify-content: center;
-  text-align: center;
-  margin-top: 5vh;
-  margin-left: 5vw;
-  margin-right: 5vw;
+.chart {
+  width: 1000px;
+  max-width: 1000px;
 }
 
 .button {
