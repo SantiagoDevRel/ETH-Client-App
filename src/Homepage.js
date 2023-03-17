@@ -16,8 +16,8 @@ function Homepage() {
         <div className={styles.chart}>
           <h2>DAI Token Logs</h2>
           <p>
-            This section plots 5 Transfer events and 5 Approval events (if any)
-            in the past 10 blocks of the Ethereum Mainnet for an the ERC20 token
+            This section plots all the Transfer events for the DAI token (if any)
+            in the past 20 blocks of the Ethereum Mainnet for an the ERC20 token
             DAI when you click in "update"
           </p>
         </div>
