@@ -30,12 +30,11 @@ const TransferSignature =
 
 function ERC20Logs() {
   useEffect(() => {
-    //formatLogs(`${TransferSignature}`);
+    formatTransfers()
   }, []);
 
-  const blocksArrayChart = [],
-    logsArrayChart = [];
- 
+  const blocksArrayChart = []
+   
   const [startingBlock, setStartingBlock] = useState(null);
   const [currentBlock, setCurrentBlock] = useState(null);
   const [logsPerBlock, setLogsPerBlock] = useState([]);
@@ -77,35 +76,32 @@ function ERC20Logs() {
         ],
       }),
     });
+    let aux = []
     for(let i=last20Blocks;i<=last20Blocks+20;i++){
       blocksArrayChart.push(i)
+      aux.push(i.toLocaleString())
     }
-    setBlocksArray(blocksArrayChart);
+    setBlocksArray(aux);
     return await Logs.json();    
   };
 
 
   async function formatTransfers(){
 
-    const {result} = await fetchLogs()
-    const blocksInDecimal = result.map(x => parseInt(x.blockNumber,16))
-    const transferArray = []
-    console.log("array",blocksInDecimal)
-    console.log([1,2,3,4,4,5,6,6,6,6].find(x=> x==6))
-   // const object
-    //console.log(result)
+    let {result} = await fetchLogs()
+    let blocksInDecimal = result.map(x => parseInt(x.blockNumber,16))
+    let transferArray = []
+
     for(let i=0;i<blocksArrayChart.length;i++){
-      const aux = 0;
+      let aux = 0;
       for(let j=0;j<blocksInDecimal.length;j++){
         if(blocksArrayChart[i] == blocksInDecimal[j]){
           aux++
-          transferArray.push[aux]
-        }else{
-          transferArray.push[0]
         }
       }
+      transferArray.push(aux)
     }
-    console.log("TX",transferArray);
+    setLogsPerBlock(transferArray)
   }
 
   
@@ -116,12 +112,12 @@ function ERC20Logs() {
     labels: blocksArray,
     datasets: [
       {
-        label: "BaseFeePerGas per Block in Gwei",
-        data: [],//baseFeesArray,
+        label: "DAI Transfers per Block",
+        data: logsPerBlock,
         backgroundColor: "white",
         borderColor: "black",
         pointBorderColor: "white",
-        tension: 0.4,
+        tension: 0.5,
       },
     ],
   };
@@ -152,7 +148,7 @@ function ERC20Logs() {
             formatTransfers();
           }}
         >
-          Update last 20 blocks BaseFee
+          Update last 20 blocks DAI Transfers
         </button>
       </div>
 
