@@ -145,7 +145,7 @@ function ERC20Logs() {
       {
         label: "Amount of DAI Transferred per Block",
         data: amountPerBlock,
-        backgroundColor: "white",
+        backgroundColor: "black",
         borderColor: "black",
         pointBorderColor: "white",
         tension: 0.5,
