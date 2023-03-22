@@ -3,7 +3,7 @@ import ERC20Logs from "./ERC20Logs";
 import Homepage from "./Homepage";
 import styles from "./Header.module.css";
 import { ReactComponent as Logo } from "./Images/ethereum-1.svg";
-import BaseFee from "./BaseFee";
+import Eip1559 from "./EIP1559";
 
 function Header() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -39,7 +39,7 @@ function Header() {
       )}
       {activeTab === "tab3" && (
         <div>
-          <BaseFee />
+          <Eip1559/>
         </div>
       )}
     </div>

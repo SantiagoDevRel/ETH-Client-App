@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./BaseFee.module.css";
+import styles from "./EIP1559.module.css";
 import { Network, Alchemy } from "alchemy-sdk";
 import { ethers } from "ethers";
 import {
@@ -43,7 +43,7 @@ export async function fetchFeeHistory() {
   };
 }
 
-function BaseFee() {
+function Eip1559() {
   useEffect(() => {
     getBaseFee();
     getRatio();
@@ -188,4 +188,4 @@ function BaseFee() {
   );
 }
 
-export default BaseFee;
+export default Eip1559;
