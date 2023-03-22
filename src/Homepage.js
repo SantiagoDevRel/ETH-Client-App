@@ -16,24 +16,14 @@ function Homepage() {
         <div className={styles.chart}>
           <h2>DAI Token Logs</h2>
           <p>
-            This section plots all the Transfer events for the DAI token (if any)
-            in the past 20 blocks of the Ethereum Mainnet for an the ERC20 token
-            DAI when you click in "update"
+          This chart monitors the total amount transferred of DAI ERC20 token per block in the ETH Mainnet
+
           </p>
         </div>
         <div className={styles.chart}>
           <h2>EIP1559</h2>
           <p>
-            This chart plots the Base_Fee_Per_Gas of each block, with the X-axis
-            as the block number and the Y-axis as the Base Fee.
-          </p>
-        </div>
-        <div className={styles.chart}>
-          <h2>Ratio of gasUsed over gasLimit</h2>
-          <p>
-            This chart plots the ratio of gasUsed over gasLimit as a percentage.
-            (How much percentage of the 30,000,000 available gas per block has
-            been used)
+            This chart monitors the "BaseFee" of each block in Gwei, and shows the total percentage of gas used per block
           </p>
         </div>
       </div>
