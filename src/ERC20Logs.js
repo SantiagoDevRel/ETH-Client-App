@@ -55,7 +55,7 @@ function ERC20Logs() {
   const provider = new ethers.providers.JsonRpcProvider(
     `${ALCHEMY_URL}${ALCHEMY_KEY}`
   );
-
+/* 
   alchemy.ws.on("block", async () => {
     console.log("New block minted with alchemy.ws()");
     //return (await formatTransfers());
@@ -65,6 +65,7 @@ function ERC20Logs() {
     console.log("New block minted with provider.on()");
     //await formatTransfers()
   });
+ */
 
   async function getLast20Blocks() {
     const latestBlock = await alchemy.core.getBlockNumber();
