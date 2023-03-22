@@ -2,16 +2,12 @@
 
 ### 1st chart - ERC20 logs
 
-`--> Monitor the logs of an arbitrary ERC20 token address you provide.`
-`--> For each block that passes, plot the total volume of the transfers (if any). Test this on more popular ERC20 tokens.`
+`--> Monitor the total amount transferred of DAI ERC20 token per block in the ETH Mainnet`
 
 ### 2nd chart
 
-`--> The BASEFEE of each block. So the X-axis is the block number, and the Y-axis is the BASEFEE. If you aren’t sure what that is, watch the Gas Savings EIP 1559 video.`
+`--> Show The BaseFee of each block in Gwei, and show the total percentage used of gas per block `
 
-### 3rd chart
-
-`--> The ratio of gasUsed over gasLimit (plot this as a percentage).`
 
 ## App deployed to
 `https://still-voice-7619.on.fleek.co/`
