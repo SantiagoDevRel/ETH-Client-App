@@ -169,9 +169,10 @@ function Eip1559() {
           className={styles.button}
           onClick={() => {
             getBaseFee();
+            getRatio();
           }}
         >
-          Update last 20 blocks BaseFee
+          Update last 20 blocks BaseFee & Ratio
         </button>
       </div>
 
