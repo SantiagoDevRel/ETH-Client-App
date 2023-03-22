@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Network, Alchemy } from "alchemy-sdk";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import styles from "./ERC20Logs.module.css";
 import {
   Chart as ChartJS,
@@ -33,7 +33,7 @@ function ERC20Logs() {
     formatTransfers()
   }, []);
 
-  const blocksArrayChart = []
+  let blocksArrayFromTo_Chart = []
    
   const [startingBlock, setStartingBlock] = useState(null);
   const [currentBlock, setCurrentBlock] = useState(null);
@@ -77,25 +77,46 @@ function ERC20Logs() {
       }),
     });
     let aux = []
-    for(let i=last20Blocks;i<=last20Blocks+20;i++){
-      blocksArrayChart.push(i)
-      aux.push(i.toLocaleString())
+    if(blocksArrayFromTo_Chart.length==0){
+      for(let i=last20Blocks;i<=last20Blocks+20;i++){
+        blocksArrayFromTo_Chart.push(i)
+        aux.push(i.toLocaleString())
+      }
+      setBlocksArray(aux);
     }
-    setBlocksArray(aux);
     return await Logs.json();    
   };
 
 
   async function formatTransfers(){
-
+    //result has all the transfers that has been maded in the last 20 blocks
     let {result} = await fetchLogs()
+    
     let blocksInDecimal = result.map(x => parseInt(x.blockNumber,16))
     let transferArray = []
 
-    for(let i=0;i<blocksArrayChart.length;i++){
+    let transfersArray = []
+    let aux;
+    let uniqueTransfersArray = []
+    
+    //fetch and create an array with all the transfers and their amount in decimal and its blockNumbers
+    //push this objects to transfersArray 
+    for(let i=0;i<result.length;i++){
+      let objectTransfer = {}
+      const blockNumberDec = BigNumber.from(result[i].blockNumber).toString()
+      const amountDec = ethers.utils.formatEther(BigNumber.from(result[i].data).toString())
+      objectTransfer[blockNumberDec] = amountDec
+      transfersArray.push(objectTransfer);
+    }
+
+    console.log(transfersArray)
+
+    //override the array with all blocks including the ones with 0 transactions
+
+    for(let i=0;i<blocksArrayFromTo_Chart.length;i++){
       let aux = 0;
       for(let j=0;j<blocksInDecimal.length;j++){
-        if(blocksArrayChart[i] == blocksInDecimal[j]){
+        if(blocksArrayFromTo_Chart[i] == blocksInDecimal[j]){
           aux++
         }
       }

@@ -84,12 +84,14 @@ function BaseFee() {
       _blockNumber -= 1;
     }
 
-    for (let i = auxArray.length - 1; i >= 0; i--) {
-      blocksArrayChart.push(auxArray[i]["blockNumber"].toLocaleString());
-      baseFeeArrayChart.push(Number(auxArray[i]["baseFee"]));
+    if(blocksArrayChart.length===0){
+      for (let i = auxArray.length - 1; i >= 0; i--) {
+        blocksArrayChart.push(auxArray[i]["blockNumber"].toLocaleString());
+        baseFeeArrayChart.push(Number(auxArray[i]["baseFee"]));
+      }
+      setBlocksArray(blocksArrayChart);
+      setBaseFeesArray(baseFeeArrayChart);  
     }
-    setBlocksArray(blocksArrayChart);
-    setBaseFeesArray(baseFeeArrayChart);
   }
 
   //Chart data
