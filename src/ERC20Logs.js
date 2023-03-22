@@ -45,7 +45,25 @@ function ERC20Logs() {
     network: Network.ETH_MAINNET,
   };
 
+  /*
+    ISSUES HERE:
+    -every time I used the provider.on("block") OR alchemy.on("block") and I use the formatTransfers() inside, it shows an error
+      because is trying to call that multiple times 
+  */
+
   const alchemy = new Alchemy(settings);
+  const provider = new ethers.providers.JsonRpcProvider(`${ALCHEMY_URL}${ALCHEMY_KEY}`);
+
+  alchemy.ws.on("block",async()=>{
+    console.log("New block minted with alchemy.ws()")
+    //return (await formatTransfers());
+  })
+
+ provider.on("block",async()=>{
+   console.log("New block minted with provider.on()")  
+   //await formatTransfers()
+  })
+ 
 
   async function getLast20Blocks() {
     const latestBlock = await alchemy.core.getBlockNumber();
@@ -86,7 +104,6 @@ function ERC20Logs() {
     }
     return await Logs.json();    
   };
-
 
   async function formatTransfers(){
     //1. fetch {result} that has all the transfers that has been maded in the last 20 blocks
