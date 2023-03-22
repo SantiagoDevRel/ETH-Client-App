@@ -46,18 +46,23 @@ export async function fetchFeeHistory() {
 function BaseFee() {
   useEffect(() => {
     getBaseFee();
+    getRatio();
   }, []);
 
   const auxArray = [],
     blocksArrayChart = [],
-    baseFeeArrayChart = [];
+    baseFeeArrayChart = [],
+    blocksRatioChart = [],
+    ratioArray = [];
 
+  const [ratioChart, setRatioChart] = useState([]);
+  const [blocksRatioArray, setBlocksRatioArray] = useState([])
   const [baseFeesArray, setBaseFeesArray] = useState([]);
   const [blocksArray, setBlocksArray] = useState([]);
   const [startingBlock, setStartingBlock] = useState(null);
   const [toTheBlock, settoTheBlock] = useState(null);
 
-  //Fetch feeHistory from alchemy
+  //format baseeFeeHistory per block
   async function getBaseFee() {
     const { currentBlock, arrayFeeHistory } = await fetchFeeHistory();
     setStartingBlock((currentBlock - 19).toLocaleString());
@@ -94,6 +99,26 @@ function BaseFee() {
     }
   }
 
+ //format Ratio used per block
+  async function getRatio() {
+    const { currentBlock, arrayFeeHistory } = await fetchFeeHistory();
+    setStartingBlock((currentBlock - 19).toLocaleString());
+    settoTheBlock(currentBlock.toLocaleString());
+    const { gasUsedRatio } = arrayFeeHistory;
+    let _blockNumber = currentBlock - 19;
+    if(ratioArray.length===0){
+      for (let i = 0; i < gasUsedRatio.length; i++) {
+        ratioArray.push(gasUsedRatio[i] * 100);
+        blocksRatioChart.push(`${_blockNumber.toLocaleString()}`);
+        _blockNumber++;
+      }
+      setRatioChart(ratioArray);
+      setBlocksRatioArray(blocksRatioChart);
+    }
+  }
+  
+
+
   //Chart data
   const data = {
     labels: blocksArray,
@@ -101,11 +126,21 @@ function BaseFee() {
       {
         label: "BaseFeePerGas per Block in Gwei",
         data: baseFeesArray,
-        backgroundColor: "white",
+        backgroundColor: "black",
         borderColor: "black",
         pointBorderColor: "white",
-        tension: 0.4,
+        tension: 0.3,
+        yAxisID: "y",
       },
+      {
+        label: "Ratio % gas used per Block",
+        data: ratioChart,
+        backgroundColor: "#03E1FF",
+        borderColor: "#03E1FF",
+        pointBorderColor: "black",
+        tension: 0.3,
+        yAxisID: "percentage",
+      }
     ],
   };
 
@@ -117,6 +152,12 @@ function BaseFee() {
       y: {
         min: null,
         max: null,
+        position: "left",
+      },
+      percentage: {
+        min: 0,
+        max: 100,
+        position: "right",
       },
     },
   };
