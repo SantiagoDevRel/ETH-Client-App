@@ -30,11 +30,11 @@ const TransferSignature =
 
 function ERC20Logs() {
   useEffect(() => {
-    formatTransfers()
+    formatTransfers();
   }, []);
 
-  let blocksArrayFromTo_Chart = []
-   
+  let blocksArrayFromTo_Chart = [];
+
   const [startingBlock, setStartingBlock] = useState(null);
   const [currentBlock, setCurrentBlock] = useState(null);
   const [amountPerBlock, setAmountPerBlock] = useState([]);
@@ -52,24 +52,25 @@ function ERC20Logs() {
   */
 
   const alchemy = new Alchemy(settings);
-  const provider = new ethers.providers.JsonRpcProvider(`${ALCHEMY_URL}${ALCHEMY_KEY}`);
+  const provider = new ethers.providers.JsonRpcProvider(
+    `${ALCHEMY_URL}${ALCHEMY_KEY}`
+  );
 
-  alchemy.ws.on("block",async()=>{
-    console.log("New block minted with alchemy.ws()")
+  alchemy.ws.on("block", async () => {
+    console.log("New block minted with alchemy.ws()");
     //return (await formatTransfers());
-  })
+  });
 
- provider.on("block",async()=>{
-   console.log("New block minted with provider.on()")  
-   //await formatTransfers()
-  })
- 
+  provider.on("block", async () => {
+    console.log("New block minted with provider.on()");
+    //await formatTransfers()
+  });
 
   async function getLast20Blocks() {
     const latestBlock = await alchemy.core.getBlockNumber();
     setCurrentBlock(latestBlock.toLocaleString());
     setStartingBlock((latestBlock - 20).toLocaleString());
-    return latestBlock-20;
+    return latestBlock - 20;
   }
 
   const fetchLogs = async () => {
@@ -94,66 +95,64 @@ function ERC20Logs() {
         ],
       }),
     });
-    let aux = []
-    if(blocksArrayFromTo_Chart.length===0){
-      for(let i=last20Blocks;i<=last20Blocks+20;i++){
-        blocksArrayFromTo_Chart.push(i)
-        aux.push(i.toLocaleString())
+    let aux = [];
+    if (blocksArrayFromTo_Chart.length === 0) {
+      for (let i = last20Blocks; i <= last20Blocks + 20; i++) {
+        blocksArrayFromTo_Chart.push(i);
+        aux.push(i.toLocaleString());
       }
       setBlocksArray(aux);
     }
-    return await Logs.json();    
+    return await Logs.json();
   };
 
-  async function formatTransfers(){
+  async function formatTransfers() {
     //1. fetch {result} that has all the transfers that has been maded in the last 20 blocks
-    let {result} = await fetchLogs()
-    
-    let transfersArray = []
+    let { result } = await fetchLogs();
+
+    let transfersArray = [];
 
     //2. create an object with all the transfers and their amount in decimal and its blockNumbers
-    //push this objects to transfersArray 
-    for(let i=0;i<result.length;i++){
-      let objectTransfer = {}
-      const blockNumberDec = BigNumber.from(result[i].blockNumber).toString()
-      const amountDec = ethers.utils.formatEther(BigNumber.from(result[i].data).toString())
-      objectTransfer[blockNumberDec] = amountDec
+    //push this objects to transfersArray
+    for (let i = 0; i < result.length; i++) {
+      let objectTransfer = {};
+      const blockNumberDec = BigNumber.from(result[i].blockNumber).toString();
+      const amountDec = ethers.utils.formatEther(
+        BigNumber.from(result[i].data).toString()
+      );
+      objectTransfer[blockNumberDec] = amountDec;
       transfersArray.push(objectTransfer);
     }
-   
-    //3. remove and sum duplicate blocks to have unique amounts transffered per block
-    let uniqueTransfersObject = {}
-    for(let i=0;i<transfersArray.length;i++){
-      const key = Object.keys(transfersArray[i])
-      const value = parseFloat(transfersArray[i][key])
 
-      if(uniqueTransfersObject.hasOwnProperty(key)){
+    //3. remove and sum duplicate blocks to have unique amounts transffered per block
+    let uniqueTransfersObject = {};
+    for (let i = 0; i < transfersArray.length; i++) {
+      const key = Object.keys(transfersArray[i]);
+      const value = parseFloat(transfersArray[i][key]);
+
+      if (uniqueTransfersObject.hasOwnProperty(key)) {
         uniqueTransfersObject[key] += value;
-      }else{
+      } else {
         uniqueTransfersObject[key] = value;
       }
     }
-    
+
     //4. add to the uniqueTransfersObject the blocks with 0 transactions
-    for(let i=0;i<blocksArrayFromTo_Chart.length;i++){
-      const currentBlock = (blocksArrayFromTo_Chart[i]).toString()
-      
-      if(!uniqueTransfersObject.hasOwnProperty(currentBlock)){
+    for (let i = 0; i < blocksArrayFromTo_Chart.length; i++) {
+      const currentBlock = blocksArrayFromTo_Chart[i].toString();
+
+      if (!uniqueTransfersObject.hasOwnProperty(currentBlock)) {
         uniqueTransfersObject[currentBlock] = 0;
       }
-      
     }
 
     //5. Update the state array with the amounts per block
-    let transferAmountChart = []
-    for(const props in uniqueTransfersObject){
-      transferAmountChart.push(uniqueTransfersObject[props])
+    let transferAmountChart = [];
+    for (const props in uniqueTransfersObject) {
+      transferAmountChart.push(uniqueTransfersObject[props]);
     }
-    setAmountPerBlock(transferAmountChart)
+    setAmountPerBlock(transferAmountChart);
   }
-
-  
-
 
   //Chart data
   const data = {
@@ -182,7 +181,6 @@ function ERC20Logs() {
     },
   };
 
-
   return (
     <>
       <div className={styles.container_title}>
@@ -208,6 +206,5 @@ function ERC20Logs() {
     </>
   );
 }
-
 
 export default ERC20Logs;

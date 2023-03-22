@@ -16,14 +16,15 @@ function Homepage() {
         <div className={styles.chart}>
           <h2>DAI Token Logs</h2>
           <p>
-          This chart monitors the total amount transferred of DAI ERC20 token per block in the ETH Mainnet
-
+            This chart monitors the total amount transferred of DAI ERC20 token
+            per block in the ETH Mainnet
           </p>
         </div>
         <div className={styles.chart}>
           <h2>EIP1559</h2>
           <p>
-            This chart monitors the "BaseFee" of each block in Gwei, and shows the total percentage of gas used per block
+            This chart monitors the "BaseFee" of each block in Gwei, and shows
+            the total percentage of gas used per block
           </p>
         </div>
       </div>

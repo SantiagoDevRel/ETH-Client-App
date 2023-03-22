@@ -39,7 +39,7 @@ function Header() {
       )}
       {activeTab === "tab3" && (
         <div>
-          <Eip1559/>
+          <Eip1559 />
         </div>
       )}
     </div>

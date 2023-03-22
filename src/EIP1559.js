@@ -56,7 +56,6 @@ function Eip1559() {
     ratioArray = [];
 
   const [ratioChart, setRatioChart] = useState([]);
-  const [blocksRatioArray, setBlocksRatioArray] = useState([])
   const [baseFeesArray, setBaseFeesArray] = useState([]);
   const [blocksArray, setBlocksArray] = useState([]);
   const [startingBlock, setStartingBlock] = useState(null);
@@ -89,35 +88,32 @@ function Eip1559() {
       _blockNumber -= 1;
     }
 
-    if(blocksArrayChart.length===0){
+    if (blocksArrayChart.length === 0) {
       for (let i = auxArray.length - 1; i >= 0; i--) {
         blocksArrayChart.push(auxArray[i]["blockNumber"].toLocaleString());
         baseFeeArrayChart.push(Number(auxArray[i]["baseFee"]));
       }
       setBlocksArray(blocksArrayChart);
-      setBaseFeesArray(baseFeeArrayChart);  
+      setBaseFeesArray(baseFeeArrayChart);
     }
   }
 
- //format Ratio used per block
+  //format Ratio used per block
   async function getRatio() {
     const { currentBlock, arrayFeeHistory } = await fetchFeeHistory();
     setStartingBlock((currentBlock - 19).toLocaleString());
     settoTheBlock(currentBlock.toLocaleString());
     const { gasUsedRatio } = arrayFeeHistory;
     let _blockNumber = currentBlock - 19;
-    if(ratioArray.length===0){
+    if (ratioArray.length === 0) {
       for (let i = 0; i < gasUsedRatio.length; i++) {
         ratioArray.push(gasUsedRatio[i] * 100);
         blocksRatioChart.push(`${_blockNumber.toLocaleString()}`);
         _blockNumber++;
       }
       setRatioChart(ratioArray);
-      setBlocksRatioArray(blocksRatioChart);
     }
   }
-  
-
 
   //Chart data
   const data = {
@@ -140,7 +136,7 @@ function Eip1559() {
         pointBorderColor: "black",
         tension: 0.3,
         yAxisID: "percentage",
-      }
+      },
     ],
   };
 
