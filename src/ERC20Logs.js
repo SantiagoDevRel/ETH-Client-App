@@ -37,7 +37,7 @@ function ERC20Logs() {
    
   const [startingBlock, setStartingBlock] = useState(null);
   const [currentBlock, setCurrentBlock] = useState(null);
-  const [logsPerBlock, setLogsPerBlock] = useState([]);
+  const [amountPerBlock, setAmountPerBlock] = useState([]);
   const [blocksArray, setBlocksArray] = useState([]);
 
   const settings = {
@@ -77,7 +77,7 @@ function ERC20Logs() {
       }),
     });
     let aux = []
-    if(blocksArrayFromTo_Chart.length==0){
+    if(blocksArrayFromTo_Chart.length===0){
       for(let i=last20Blocks;i<=last20Blocks+20;i++){
         blocksArrayFromTo_Chart.push(i)
         aux.push(i.toLocaleString())
@@ -89,17 +89,12 @@ function ERC20Logs() {
 
 
   async function formatTransfers(){
-    //result has all the transfers that has been maded in the last 20 blocks
+    //1. fetch {result} that has all the transfers that has been maded in the last 20 blocks
     let {result} = await fetchLogs()
     
-    let blocksInDecimal = result.map(x => parseInt(x.blockNumber,16))
-    let transferArray = []
-
     let transfersArray = []
-    let aux;
-    let uniqueTransfersArray = []
-    
-    //fetch and create an array with all the transfers and their amount in decimal and its blockNumbers
+
+    //2. create an object with all the transfers and their amount in decimal and its blockNumbers
     //push this objects to transfersArray 
     for(let i=0;i<result.length;i++){
       let objectTransfer = {}
@@ -108,21 +103,36 @@ function ERC20Logs() {
       objectTransfer[blockNumberDec] = amountDec
       transfersArray.push(objectTransfer);
     }
+   
+    //3. remove and sum duplicate blocks to have unique amounts transffered per block
+    let uniqueTransfersObject = {}
+    for(let i=0;i<transfersArray.length;i++){
+      const key = Object.keys(transfersArray[i])
+      const value = parseFloat(transfersArray[i][key])
 
-    console.log(transfersArray)
-
-    //override the array with all blocks including the ones with 0 transactions
-
-    for(let i=0;i<blocksArrayFromTo_Chart.length;i++){
-      let aux = 0;
-      for(let j=0;j<blocksInDecimal.length;j++){
-        if(blocksArrayFromTo_Chart[i] == blocksInDecimal[j]){
-          aux++
-        }
+      if(uniqueTransfersObject.hasOwnProperty(key)){
+        uniqueTransfersObject[key] += value;
+      }else{
+        uniqueTransfersObject[key] = value;
       }
-      transferArray.push(aux)
     }
-    setLogsPerBlock(transferArray)
+    
+    //4. add to the uniqueTransfersObject the blocks with 0 transactions
+    for(let i=0;i<blocksArrayFromTo_Chart.length;i++){
+      const currentBlock = (blocksArrayFromTo_Chart[i]).toString()
+      
+      if(!uniqueTransfersObject.hasOwnProperty(currentBlock)){
+        uniqueTransfersObject[currentBlock] = 0;
+      }
+      
+    }
+
+    //5. Update the state array with the amounts per block
+    let transferAmountChart = []
+    for(const props in uniqueTransfersObject){
+      transferAmountChart.push(uniqueTransfersObject[props])
+    }
+    setAmountPerBlock(transferAmountChart)
   }
 
   
@@ -133,8 +143,8 @@ function ERC20Logs() {
     labels: blocksArray,
     datasets: [
       {
-        label: "DAI Transfers per Block",
-        data: logsPerBlock,
+        label: "Amount of DAI Transferred per Block",
+        data: amountPerBlock,
         backgroundColor: "white",
         borderColor: "black",
         pointBorderColor: "white",
