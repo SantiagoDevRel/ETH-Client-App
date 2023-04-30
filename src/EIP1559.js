@@ -21,7 +21,9 @@ ChartJS.register(
   Tooltip
 );
 
-const ALCHEMY_KEY = `uk3L_f3i_POcVTRhWxKrYlUm__ftnzfm`;
+const KEY = process.env.REACT_APP_KEY;
+
+const ALCHEMY_KEY = KEY;
 
 const settings = {
   apiKey: `${ALCHEMY_KEY}`,
