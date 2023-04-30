@@ -21,8 +21,10 @@ ChartJS.register(
   Legend,
   Tooltip
 );
+const KEY = process.env.REACT_APP_KEY;
+
 const ALCHEMY_URL = `https://eth-mainnet.g.alchemy.com/v2/`;
-const ALCHEMY_KEY = `uk3L_f3i_POcVTRhWxKrYlUm__ftnzfm`;
+const ALCHEMY_KEY = KEY;
 
 const DAIAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 const TransferSignature =
@@ -55,7 +57,7 @@ function ERC20Logs() {
   const provider = new ethers.providers.JsonRpcProvider(
     `${ALCHEMY_URL}${ALCHEMY_KEY}`
   );
-/* 
+  /* 
   alchemy.ws.on("block", async () => {
     console.log("New block minted with alchemy.ws()");
     //return (await formatTransfers());
