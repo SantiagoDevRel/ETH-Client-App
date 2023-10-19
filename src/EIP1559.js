@@ -23,7 +23,7 @@ ChartJS.register(
 
 const KEY = process.env.REACT_APP_KEY;
 
-const ALCHEMY_KEY = KEY;
+const ALCHEMY_KEY = "IpyDwxNjc0EQh7Fry0jz03AbWFLTXwIr";
 
 const settings = {
   apiKey: `${ALCHEMY_KEY}`,
