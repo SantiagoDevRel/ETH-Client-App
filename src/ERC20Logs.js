@@ -24,7 +24,7 @@ ChartJS.register(
 const KEY = process.env.REACT_APP_KEY;
 
 const ALCHEMY_URL = `https://eth-mainnet.g.alchemy.com/v2/`;
-const ALCHEMY_KEY = KEY;
+const ALCHEMY_KEY = "IpyDwxNjc0EQh7Fry0jz03AbWFLTXwIr"; //it should use a ENV variable.
 
 const DAIAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 const TransferSignature =
